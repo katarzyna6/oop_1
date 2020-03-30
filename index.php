@@ -43,6 +43,11 @@ class Personnage {
 
     function setHealth(int $health) {
         $this->health = $health;
+        if($this->health < 1) {
+            $this->setDeath(true);
+        } else {
+            $this->setDeath(false);
+        }
     }
 
     function isDeath(): bool {
