@@ -5,15 +5,12 @@ class Personnage {
     private $nom;
     private $force;
     private $level;
-
-    function __construct(string $nom, int $force, int $level = 1) {
-       $this->nom = $nom;
-       $this->force = $force;
-       $this->level = $level; 
-    }
+    private $health;
+    private $death;
 
     function caracteristiques() {
-        echo  $this->nom ." a une force de ". $this->force .". Son niveau est: ". $this->level;
+        $etat = ($this->death)? "mort" : "vivant";
+        echo  $this->nom ." a une force de ". $this->force . ", son état de santé est de ". $this->health ." points/100.  Son niveau est: ". $this->level .". Il est: " . $etat. ".";
     }
 
     function getNom(): string {
@@ -24,22 +21,59 @@ class Personnage {
         $this->nom = $nom;
     }
 
+    function getForce(): int {
+        return $this->force;
+    }
+
+    function setForce(int $force) {
+        $this->force = $force;
+    }
+
     function getLevel(): int {
-        return $this->level;
+        return $this->force;
     }
 
-    function setLevel(int $lvl) {
-        $this->level = $lvl;
+    function setLevel(int $level) {
+        $this->level = $level;
     }
 
+    function getHealth(): int {
+        return $this->health;
+    }
+
+    function setHealth(int $health) {
+        $this->health = $health;
+    }
+
+    function isDeath(): bool {
+        return $this->death;
+    }
+
+    function setDeath(int $death) {
+        $this->death = $death;
+    }
 }
 
-$perso1 = new Personnage("Rose", 12);
-$perso2 = new Personnage("Golbu", 15, 2);
-$perso3 = new Personnage("Arthis", 13, 2);
+$perso1 = new Personnage();
+$perso1->setNom("Rose");
+$perso1->setForce(12);
+$perso1->setLevel(1);
+$perso1->setHealth(10);
+$perso1->setDeath(false);
 
-$perso2->setNom("Mary");
-$perso2->setLevel(2);
+$perso2 = new Personnage();
+$perso2->setNom("Golbu");
+$perso2->setForce(15);
+$perso2->setLevel(1);
+$perso2->setHealth(10);
+$perso2->setDeath(false);
 
-$perso2->caracteristiques();
+$perso3 = new Personnage();
+$perso3->setNom("Arthis");
+$perso3->setForce(13);
+$perso3->setLevel(1);
+$perso3->setHealth(0);
+$perso3->setDeath(true);
+
+$perso1->caracteristiques();
 
