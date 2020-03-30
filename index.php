@@ -13,7 +13,7 @@ class Personnage {
     }
 
     function caracteristiques() {
-        echo  $this->nom ." a une force de ". $this->force . ", une santé de ". $this->health . ". Son niveau est: ". $this->level;
+        echo  $this->nom ." a une force de ". $this->force .". Son niveau est: ". $this->level;
     }
 }
 
@@ -21,5 +21,5 @@ $perso1 = new Personnage("Rose", 12);
 $perso2 = new Personnage("Golbu", 15, 2);
 $perso3 = new Personnage("Arthis", 13, 2);
 
-$perso1->caracteristiques();
+$perso2->caracteristiques();
 
