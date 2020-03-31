@@ -19,7 +19,7 @@ class Personnage {
 
     function caracteristiques() {
         $etat = ($this->death)? "mort" : "vivant";
-        echo  $this->nom ." a une force de ". $this->force . ", son état de santé est de ". $this->health ." points/100.  Son niveau est: ". $this->level .". Il est: " . $etat. "."."<br>";
+        echo  $this->nom ." a une force de ". $this->force . ", son état de santé est de ". $this->health ." points/100.  Son niveau est: ". $this->level .". Il est: " . $etat. "."."<br><br>";
     }
 
     function getNom(): string {
@@ -36,14 +36,6 @@ class Personnage {
 
     function setForce(int $force) {
         $this->force = $force;
-    }
-
-    function getLevel(): int {
-        return $this->force;
-    }
-
-    function setLevel(int $level) {
-        $this->level = $level;
     }
 
     function getHealth(): int {
@@ -71,6 +63,15 @@ class Personnage {
         $perso->setDeath();
     }
 
+    function getLevel(): int {
+        return $this->level;
+    }
+
+    function levelUp() {
+        $this->setlevel($this->getLevel()+1);
+        
+    }
+
 }
 
 $perso1 = new Personnage("Rose", 12);
@@ -79,9 +80,17 @@ $perso2 = new Personnage("Golbu", 15, 10, 2);
 
 $perso3 = new Personnage("Arthis", 13, 0);
 
+$perso1->caracteristiques();
+$perso2->caracteristiques();
+$perso3->caracteristiques();
 echo "Avant attaque : ";
 $perso2->caracteristiques();
 $perso1->attaquer($perso2);
 echo "Après l'attaque : ";
 $perso2->caracteristiques();
+
+
+$perso1->levelUp($perso1);
+echo "Un niveau + 1";
+$perso1->caracteristiques();
 
