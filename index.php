@@ -2,11 +2,11 @@
 
 class Personnage {
 
-    private $nom;
-    private $force;
-    private $level;
-    private $health;
-    private $death;
+    protected $nom;
+    protected $force;
+    protected $level;
+    protected $health;
+    protected $death;
 
     function __construct(string $nom, int $force, int $health = 100, int $level = 1) {
         $this->setNom($nom);
@@ -59,8 +59,13 @@ class Personnage {
     }
 
     function attaquer(Personnage $perso) {
+        $this->tirer();
         $perso->setHealth($perso->getHealth() - $this->force);
         $perso->setDeath();
+    }
+
+    function tirer() {
+        
     }
 
     function getLevel(): int {
@@ -72,29 +77,64 @@ class Personnage {
     }
 
     function levelUp() {
-        $this->setlevel($this->getLevel()+1);
+        $this->setLevel($this->getLevel()+1);
         
     }
 
 }
 
-$perso1 = new Personnage("Rose", 12);
 
-$perso2 = new Personnage("Golbu", 15, 10, 2);
+class Archer extends Personnage {
+    
+    function attaquer(Personnage $perso) {
+        $this->tirer();
+        parent::attaquer($perso);
+    }
 
-$perso3 = new Personnage("Arthis", 13, 0);
+    function tirer() {
+        echo $this->nom." de type ".Archer::class." tire une flèche.<br>";
+    }
 
-$perso1->caracteristiques();
-$perso2->caracteristiques();
-$perso3->caracteristiques();
+}
+
+class Guerrier extends Personnage {
+
+    function attaquer(Personnage $perso) {
+        $this->frapper(); 
+        parent::attaquer($perso);   
+    }
+
+    function frapper() {
+        echo $this->nom." de type ".Guerrier::class." frappe avec une hâche.<br>";
+    }
+
+}
+
+class Magicien extends Personnage {
+
+    function attaquer(Personnage $perso) {
+        $this->lancerSort();
+        parent::attaquer($perso);
+    }
+
+    function lancerSort() {
+        echo $this->nom." de type ".Magicien::class." lance un sort.<br>";
+    }
+
+}
+
+
+$perso1 = new Archer("Rose", 12);
+$perso2 = new Guerrier("Golbu", 15, 10, 2);
+$perso3 = new Magicien("Arthis", 13, 0);
+
 echo "Avant attaque : ";
-$perso2->caracteristiques();
-$perso1->attaquer($perso2);
+$perso1->caracteristiques();
+$perso3->attaquer($perso1);
 echo "Après l'attaque : ";
-$perso2->caracteristiques();
-
+$perso1->caracteristiques();
 
 $perso1->levelUp($perso1);
-echo "Un niveau + 1";
 $perso1->caracteristiques();
+
 
