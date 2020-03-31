@@ -67,6 +67,10 @@ class Personnage {
         return $this->level;
     }
 
+    function setLevel($level) {
+        $this->level = $level;
+    }
+
     function levelUp() {
         $this->setlevel($this->getLevel()+1);
         
