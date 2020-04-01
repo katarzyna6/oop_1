@@ -59,8 +59,6 @@ class Personnage {
     }
 
     function attaquer(Personnage $perso) {
-        $this->tirer();
-        $perso->setHealth($perso->getHealth() - $this->force);
         $perso->setDeath();
     }
 
@@ -88,24 +86,42 @@ class Archer extends Personnage {
     
     function attaquer(Personnage $perso) {
         $this->tirer();
+        $this->degats($perso);
         parent::attaquer($perso);
     }
 
     function tirer() {
-        echo $this->nom." de type ".Archer::class." tire une flèche.<br>";
+        echo $this->nom." de type ".Archer::class." tire une flèche.<br><br>";
     }
 
+    function degats(Personnage $perso) {
+        if($perso instanceof Magicien) {
+            $perso->setHealth($perso->getHealth() - 15);
+        } else {
+            $perso->setHealth($perso->getHealth() - 10);
+        }
+    }
 }
 
 class Guerrier extends Personnage {
 
     function attaquer(Personnage $perso) {
         $this->frapper(); 
+        $this->degats($perso);
         parent::attaquer($perso);   
     }
 
     function frapper() {
-        echo $this->nom." de type ".Guerrier::class." frappe avec une hâche.<br>";
+        echo $this->nom." de type ".Guerrier::class." frappe avec une hâche.<br><br>";
+    }
+
+    function degats(Personnage $perso) {
+        if($perso instanceof Magicien) {
+            $perso->setHealth($perso->getHealth() - 10);
+        } else {
+            $perso->setHealth($perso->getHealth() - 10);
+
+        }
     }
 
 }
@@ -114,11 +130,21 @@ class Magicien extends Personnage {
 
     function attaquer(Personnage $perso) {
         $this->lancerSort();
+        $this->degats($perso);
         parent::attaquer($perso);
     }
 
     function lancerSort() {
-        echo $this->nom." de type ".Magicien::class." lance un sort.<br>";
+        echo $this->nom." de type ".Magicien::class." lance un sort.<br><br>";
+    }
+
+    function degats(Personnage $perso) {
+        if($perso instanceof Archer) {
+            $perso->setHealth($perso->getHealth() - 10);
+        } else {
+            $perso->setHealth($perso->getHealth() - 20);
+
+        }
     }
 
 }
@@ -126,14 +152,14 @@ class Magicien extends Personnage {
 
 $perso1 = new Archer("Rose", 12);
 $perso2 = new Guerrier("Golbu", 15, 10, 2);
-$perso3 = new Magicien("Arthis", 13, 0);
+$perso3 = new Magicien("Arthis", 100, 100);
 
 echo "Avant attaque : ";
-$perso1->caracteristiques();
-$perso3->attaquer($perso1);
+$perso3->caracteristiques();
+$perso2->attaquer($perso3);
 echo "Après l'attaque : ";
-$perso1->caracteristiques();
-
+$perso3->caracteristiques();
+echo "<hr>";
 $perso1->levelUp($perso1);
 $perso1->caracteristiques();
 
