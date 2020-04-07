@@ -69,6 +69,7 @@ abstract class Personnage implements Attaquant {
 
     function subirDegat(int $degats) {
         $this->health -= $degats;
+        $this->setDeath();
 
     }
 
@@ -92,27 +93,27 @@ class Archer extends Personnage {
     
     function attaquer(Personnage $perso) {
         $this->tirer();
-        $this->degats($perso);
-        parent::attaquer($perso);
+            if($perso instanceof Magicien) {
+                $perso->subirDegat($this->force + 10);
+            } else {
+                $perso->subirDegat($this->force);
+            } 
+        }
     }
 
     function tirer() {
         echo $this->nom." de type ".Archer::class." tire une flèche.<br><br>";
     }
 
-    function degats(Personnage $perso) {
-        if($perso instanceof Guerrier) {
-            $perso->setHealth($perso->getHealth() - 10);
-        } 
-    }
-}
-
 class Guerrier extends Personnage {
 
     function attaquer(Personnage $perso) {
         $this->frapper(); 
-        $this->degats($perso);
-        parent::attaquer($perso);   
+        if($perso instanceof Magicien) {
+        $perso->subirDegat($this->force + 10);
+            } else {
+                $perso->subirDegat($this->force);
+        }   
     }
 
     function frapper() {
@@ -131,8 +132,11 @@ class Magicien extends Personnage {
 
     function attaquer(Personnage $perso) {
         $this->lancerSort();
-        $this->degats($perso);
-        parent::attaquer($perso);
+        if($perso instanceof Archer) {
+        $perso->subirDegat($this->force + 10);
+            } else {
+                $perso->subirDegat($this->force);
+            }
     }
 
     function lancerSort() {
