@@ -1,11 +1,15 @@
 <?php
 
 interface Attaquant {
-    function attaquer(Personnage $perso);
+    function attaquer(Cible $perso);
+}
+
+interface Cible {
+    function subirDegat(int $degats);
 }
 
 
-abstract class Personnage implements Attaquant {
+abstract class Personnage implements Attaquant, Cible {
 
     protected $nom;
     protected $force;
@@ -63,7 +67,7 @@ abstract class Personnage implements Attaquant {
         }
     }
 
-    function attaquer(Personnage $perso) {
+    function attaquer(Cible $perso) {
         $perso->setDeath();
     }
 
@@ -84,14 +88,12 @@ abstract class Personnage implements Attaquant {
     function levelUp() {
         $this->level++;   
     }
-
-
 }
 
 
 class Archer extends Personnage {
     
-    function attaquer(Personnage $perso) {
+    function attaquer(Cible $perso) {
         $this->tirer();
             if($perso instanceof Magicien) {
                 $perso->subirDegat($this->force + 10);
@@ -107,7 +109,7 @@ class Archer extends Personnage {
 
 class Guerrier extends Personnage {
 
-    function attaquer(Personnage $perso) {
+    function attaquer(Cible $perso) {
         $this->frapper(); 
         if($perso instanceof Magicien) {
         $perso->subirDegat($this->force + 10);
@@ -125,12 +127,11 @@ class Guerrier extends Personnage {
             $perso->setHealth($perso->getHealth() - 10);
         } 
     }
-
 }
 
 class Magicien extends Personnage {
 
-    function attaquer(Personnage $perso) {
+    function attaquer(Cible $perso) {
         $this->lancerSort();
         if($perso instanceof Archer) {
         $perso->subirDegat($this->force + 10);
@@ -148,13 +149,18 @@ class Magicien extends Personnage {
             $perso->setHealth($perso->getHealth() - 10);
         } 
     }
-
 }
 
-class Creature implements Attaquant {
+class Creature implements Attaquant, Cible {
 
-    function attaquer(Personnage $perso) {
-        $perso->setHealth($perso->getHealth() - rand(6, 12));
+    private $health;
+
+    function attaquer(Cible $perso) {
+        $perso->subirDegat(rand(6, 12));
+    }
+
+    function subirDegat(int $degats) {
+        $this->health -= $degats;
     }
 }
 
@@ -162,23 +168,22 @@ class Creature implements Attaquant {
 $perso1 = new Archer("Rose", 80);
 $perso2 = new Guerrier("Golbu", 60, 10, 2);
 $perso3 = new Magicien("Arthis", 40, 0);
+$creature = new Creature("Monstre", 100, 25, 1);
 
-$creature = new Creature();
 
-
-$creature->attaquer($perso3);
+$perso2->attaquer($creature);
 echo "Après l'attaque : ";
-$perso3->caracteristiques();
+$creature->caracteristiques();
 echo "<hr>";
 
 
-echo "Avant attaque : ";
+/*echo "Avant attaque : ";
 $perso3->caracteristiques();
 $perso2->attaquer($perso3);
 echo "Après l'attaque : ";
 $perso3->caracteristiques();
 echo "<hr>";
 $perso1->levelUp($perso1);
-$perso1->caracteristiques();
+$perso1->caracteristiques();*/
 
 
