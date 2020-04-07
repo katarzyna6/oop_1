@@ -160,11 +160,11 @@ class Creature implements Attaquant, Cible {
     protected $death;
 
     function __construct(string $nom, int $force, int $health = 100, int $level = 1) {
-        $this->setNom($nom);
-        $this->setForce($force);
-        $this->setHealth($health);
-        $this->setLevel($level);
-        $this->setDeath();
+        $this->nom = $nom;
+        $this->force = $force;
+        $this->health = $health;
+        $this->level = $level;
+        $this->death = $death;
         
     }
 
