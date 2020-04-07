@@ -153,7 +153,25 @@ class Magicien extends Personnage {
 
 class Creature implements Attaquant, Cible {
 
-    private $health;
+    protected $nom;
+    protected $force;
+    protected $level;
+    protected $health;
+    protected $death;
+
+    function __construct(string $nom, int $force, int $health = 100, int $level = 1) {
+        $this->setNom($nom);
+        $this->setForce($force);
+        $this->setHealth($health);
+        $this->setLevel($level);
+        $this->setDeath();
+        
+    }
+
+    function caracteristiques() {
+        $etat = ($this->death)? "mort" : "vivant";
+        echo  $this->nom ." a une force de ". $this->force . ", son état de santé est de ". $this->health ." points/100.  Son niveau est: ". $this->level .". Il est: " . $etat. "."."<br><br>";
+    }
 
     function attaquer(Cible $perso) {
         $perso->subirDegat(rand(6, 12));
