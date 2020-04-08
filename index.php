@@ -164,7 +164,6 @@ class Creature implements Attaquant, Cible {
         $this->force = $force;
         $this->health = $health;
         $this->level = $level;
-        $this->death = $death;
         
     }
 
