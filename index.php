@@ -194,13 +194,13 @@ $creature->caracteristiques();
 echo "<hr>";
 
 
-/*echo "Avant attaque : ";
+echo "Avant attaque : ";
 $perso3->caracteristiques();
 $perso2->attaquer($perso3);
 echo "Après l'attaque : ";
 $perso3->caracteristiques();
 echo "<hr>";
 $perso1->levelUp($perso1);
-$perso1->caracteristiques();*/
+$perso1->caracteristiques();
 
 
